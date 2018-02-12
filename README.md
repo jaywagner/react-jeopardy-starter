@@ -9,9 +9,11 @@ This starter provides a service to talk to the jeopardy api. It already displays
 **HARDER**  
 Use two components. 
 
-*One component should display the question, category, and point value.
+* One should be a higher order component and hanldle all bnusiness logic.
+  *  getting a question
+  *  scoring
 
-* The other should handle grading the answer and displaying the users score.
+* The other should all the display of the data through passed in props.
 
 **Extra Hard Nonsense**  
 Use two components. 
