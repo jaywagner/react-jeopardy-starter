@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { JeopardyService } from "./services/JeopardyService";
+import GameBoard from "./components/GameBoard";
 import './App.css';
 
 class App extends Component {
@@ -10,7 +11,7 @@ class App extends Component {
     super(props);
     this.client = new JeopardyService();
     this.state = {
-      question: {},
+      data: {category:{}},
       score: 0
     }
   }
@@ -18,8 +19,9 @@ class App extends Component {
   getNewQuestion = () => {
     return this.client.getQuestion().then(result => {
       this.setState({
-        question: result.data[0]
+        data: result.data[0]
       })
+      console.log(this.state.data.answer)
     })
   }
 
@@ -27,10 +29,28 @@ class App extends Component {
     this.getNewQuestion();
   }
 
+  checkAnswer = (event) => {
+    event.preventDefault();
+
+    const userAnswer = event.target.answer.value
+    if(userAnswer === this.state.data.answer){
+      this.setState({
+        score: this.state.score += this.state.data.value
+      })
+    }else{
+      this.setState({
+        score: this.state.score -= this.state.data.value
+      })
+    }
+    this.getNewQuestion();
+    event.target.answer.value = "";
+  }
+
   render() {
+
     return (
       <div>
-        {JSON.stringify(this.state.question)}
+        <GameBoard scoreGame={this.checkAnswer} data={this.state.data} score={this.state.score}/>
       </div>
     );
   }
